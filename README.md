@@ -5,6 +5,8 @@ Uses Selenium API for web scraping and pandas API for data output.
 
 ## Objectives
 - Learn how to web scrape using Python
+- Learn how to manage and write CSV files
 - Learn how to send data into an excel sheet
+- Learn how to use Google Maps API for more detailed information on the property
 
 ## How to use
