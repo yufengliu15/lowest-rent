@@ -1,7 +1,7 @@
 # Lowest-rent
-Using Google Chrome and rentals.ca, the program will find all the houses/apartments in an area and return it in a clear and concise excel spreadsheet. 
+Using Google Chrome and rentals.ca, the program will find all the houses/apartments in an area and return it in a clear and concise excel spreadsheet. Uses Selenium API for web scraping, pandas API for data output to excel, Google Maps API for geocoding, and csv for writing and reading .csv files. 
 
-Uses Selenium API for web scraping, pandas API for data output to excel, Google Maps API for geocoding, and csv for writing and reading .csv files. 
+This was a passion project to observe the housing market in Ottawa. 
 
 ## Objectives
 - Learn how to web scrape using Python
