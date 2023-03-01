@@ -1,5 +1,3 @@
-# use google api to implement transit time and to create a url to google map of the surroundings
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By # used for By.CLASS_NAME etc. 
 import os,csv # os for system('clear'), csv for writing to csv files
@@ -13,6 +11,7 @@ price = []
 numberOfBeds = []
 numberOfBaths = []
 address = []
+squareFT = []
 
 websiteToScrape = "https://rentals.ca/ottawa"
 driver.get(websiteToScrape)
@@ -23,6 +22,7 @@ totalNumOfRentals = int(totalNumOfRentals.text.split(' ', 1)[0])
 
 totalPropertiesTraversed = 0
 firstTime = True
+
 # data retrival for properties on the same page 
 while totalPropertiesTraversed < totalNumOfRentals:
     propertiesOnCurrPage = driver.find_elements(By.CLASS_NAME, "listing-card__details")
@@ -39,6 +39,7 @@ while totalPropertiesTraversed < totalNumOfRentals:
         price.append(currProperty.find_element(By.CLASS_NAME, "listing-card__price").text)
         bedsAndBathList = currProperty.find_elements(By.TAG_NAME, "li")
         
+        print (bedsAndBathList)
         # number of beds data
         bedData = bedsAndBathList[0]
         lowestBedIndex = bedData.text.find("BED")
@@ -48,6 +49,14 @@ while totalPropertiesTraversed < totalNumOfRentals:
         bathData = bedsAndBathList[1]
         lowestBedIndex = bathData.text.find("BATH")
         numberOfBaths.append(bathData.text[:lowestBedIndex])
+        
+        # square footage data
+        try:
+            squareFTData = bedsAndBathList[2]
+            lowestSquareFTIndex = squareFTData.text.find("FT")
+            squareFT.append(squareFTData.text[:lowestSquareFTIndex])
+        except:
+            squareFT.append("N/A")
         
         # address data
         addressData = currProperty.find_element(By.CLASS_NAME, "listing-card__title")
@@ -74,6 +83,7 @@ for i in range(totalNumOfRentals):
     propertyDictionary["Pricing"] = price[i]
     propertyDictionary["Beds"] = numberOfBeds[i]
     propertyDictionary["Baths"] = numberOfBaths[i]
+    propertyDictionary["Square FT"] = squareFT[i]
     propertyDictionary["Address"] = address[i]
     dataDictionary[i] = propertyDictionary
 
@@ -81,7 +91,7 @@ csvFileName = input("Input a name for the .csv file (do not add extension): ")
 csvFileName = csvFileName + '.csv'
 
 with open(csvFileName, 'w', newline='') as csvFile:
-    _fieldnames = ['url', 'Beds', 'Baths', 'Pricing', 'Address']
+    _fieldnames = ['url', 'Beds', 'Baths', 'Square FT' , 'Pricing', 'Address']
     writer = csv.DictWriter(csvFile, fieldnames = _fieldnames)
     # writeheader allows for column names using fieldnames
     writer.writeheader()
