@@ -39,7 +39,6 @@ while totalPropertiesTraversed < totalNumOfRentals:
         price.append(currProperty.find_element(By.CLASS_NAME, "listing-card__price").text)
         bedsAndBathList = currProperty.find_elements(By.TAG_NAME, "li")
         
-        print (bedsAndBathList)
         # number of beds data
         bedData = bedsAndBathList[0]
         lowestBedIndex = bedData.text.find("BED")
